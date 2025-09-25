@@ -29,6 +29,13 @@
     width: 125px;
 }
 
+.button_small {
+    width: 100px;
+    font-size: 0.6rem;
+    padding: 5px;
+    margin: 4px;
+}
+
 .button_medium {
     width: 150px;
 }

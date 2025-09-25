@@ -63,7 +63,7 @@ function Moviepage() {
             </p>
             <div className="movie_page_genre_container">
               {detailedMovie.genres.map((genre) => (
-                <Button name={genre.name} variant="primary" width="default" />
+                <Button name={genre.name} variant="primary" width="small" />
               ))}
             </div>
             <p className="movie_page_summary">{detailedMovie.overview}</p>

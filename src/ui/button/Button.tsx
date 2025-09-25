@@ -4,12 +4,18 @@ import clsx from "clsx";
 interface ButtonProps {
   name: string;
   variant: "primary" | "secondary";
-  width: "default" | "medium" | "large";
+  width: "default" | "small" | "medium" | "large";
 }
 
 export const Button = (props: ButtonProps) => {
   return (
-    <button className={clsx("button", `button_${props.variant}`, `button_${props.width}`)}>
+    <button
+      className={clsx(
+        "button",
+        `button_${props.variant}`,
+        `button_${props.width}`
+      )}
+    >
       {props.name}
     </button>
   );
