@@ -1,0 +1,38 @@
+.button {
+    margin: 8px;
+    border-radius: 2px;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.button_primary {
+    background-color: rgba(248, 248, 255, 1);
+    color: rgba(47, 79, 79, 1);
+
+    &:hover {
+        background-color: rgba(220, 220, 220, 0.8);
+    }
+}
+
+.button_secondary {
+    background-color: rgba(248, 248, 255, 0.5);
+    color: rgba(248, 248, 255, 1);
+
+    &:hover {
+        background-color: rgba(248, 248, 255, 0.2);
+    }
+}
+
+.button_default {
+    width: 125px;
+}
+
+.button_medium {
+    width: 150px;
+}
+
+.button_large {
+    width: 200px;
+}
