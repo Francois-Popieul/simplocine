@@ -10,6 +10,7 @@ import type {
 import { Carrousel } from "../ui/carrousel/Carrousel";
 import { Banner } from "../ui/banner/Banner";
 import type { Language } from "../types";
+import Navbar from "../ui/navbar/navbar";
 
 const personURL = "discover/person";
 const movieListURL = "discover/movie";
@@ -82,10 +83,11 @@ function Homepage() {
 
   return (
     <>
+      <Navbar />
       <Banner array={trendingMovies} />
-      <Carrousel title="Films populaires" array={trendingMovies} />
-      <Carrousel title="Films les mieux notés" array={topRatedMovies} />
-      <Carrousel title="Prochaines sorties" array={upcomingMovies} />
+      <Carrousel title="Trending Movies" array={trendingMovies} />
+      <Carrousel title="Top Rated Movies" array={topRatedMovies} />
+      <Carrousel title="Upcoming Movies" array={upcomingMovies} />
     </>
   );
 }

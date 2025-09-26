@@ -1,0 +1,27 @@
+.navbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.logo {
+    display: block;
+    width: 20%;
+
+    & img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.link_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2rem;
+    margin-right: 1rem;
+}

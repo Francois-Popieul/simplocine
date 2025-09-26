@@ -29,7 +29,7 @@ export const Banner = (props: BannerProps) => {
 
   return (
     <>
-      <h2 className="banner_title">À l'affiche</h2>
+      <h2 className="banner_title">Selection</h2>
       <div className="banner_container">
         <div className="banner">
           <img
@@ -41,9 +41,9 @@ export const Banner = (props: BannerProps) => {
             <div>
               <p className="banner_movie_title">{randomMovie.title}</p>
               <p>
-                Date de sortie :{" "}
+                Release date:{" "}
                 {new Date(randomMovie.release_date).toLocaleDateString(
-                  "fr-FR",
+                  "en-US",
                   {
                     year: "numeric",
                     month: "long",
@@ -51,10 +51,10 @@ export const Banner = (props: BannerProps) => {
                   }
                 )}
               </p>
-              <p>Note : {randomMovie.vote_average}</p>
+              <p>Note: {randomMovie.vote_average}</p>
             </div>
             <Link key={randomMovie.id} to={`/movie/${randomMovie.id}`}>
-              <Button name="Détails" variant="primary" width="medium" />
+              <Button name="Details" variant="primary" width="medium" />
             </Link>
           </div>
         </div>

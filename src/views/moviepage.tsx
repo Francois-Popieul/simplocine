@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "../ui/button/Button";
 import "./moviepage.css";
+import Navbar from "../ui/navbar/navbar";
 
 const options = {
   method: "GET",
@@ -47,6 +48,7 @@ function Moviepage() {
 
   return (
     <>
+      <Navbar />
       {detailedMovie && (
         <div className="movie_page_container">
           <div className="movie_page_left_column">
@@ -59,7 +61,7 @@ function Moviepage() {
           <div className="movie_page_right_column">
             <h1 className="movie_page_title">{detailedMovie.title}</h1>
             <p className="movie_page_length">
-              Length : {detailedMovie.runtime} minutes
+              Length: {detailedMovie.runtime} minutes
             </p>
             <div className="movie_page_genre_container">
               {detailedMovie.genres.map((genre) => (
