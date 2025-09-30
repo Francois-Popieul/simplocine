@@ -4,9 +4,11 @@ a {
 }
 
 carrousel_container {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100vw;
+    height: 25%;
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -52,4 +54,32 @@ carrousel_container {
 .vignette_image {
     width: 150px;
     height: auto;
+}
+
+.right_scroll_button {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 600;
+    right: 5px;
+    width: 50px;
+    height: 30%;
+    opacity: 0.2;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.left_scroll_button {
+    position: absolute;
+    font-size: 2rem;
+    font-weight: 600;
+    left: 5px;
+    width: 50px;
+    height: 30%;
+    opacity: 0.2;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }

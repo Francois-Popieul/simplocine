@@ -17,7 +17,7 @@ async function itemFetcher<T>(
   urlpart: string,
   language: Language
 ): Promise<T | null> {
-  const url = `https://api.themoviedb.org/3/${urlpart}?language=${language}`;
+  const url = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
   try {
     const response = await fetch(url, options);
 

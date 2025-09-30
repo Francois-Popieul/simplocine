@@ -28,7 +28,7 @@ export const options = {
 };
 
 async function fetcher<T>(urlpart: string, language: Language): Promise<T[]> {
-  const url = `https://api.themoviedb.org/3/${urlpart}?language=${language}`;
+  const url = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
   try {
     const response = await fetch(url, options);
 

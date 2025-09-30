@@ -5,6 +5,7 @@ interface ButtonProps {
   name: string;
   variant: "primary" | "secondary";
   width: "default" | "small" | "medium" | "large";
+  onClick?: () => void;
 }
 
 export const Button = (props: ButtonProps) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Genre, Movie } from "../types";
-import { Carrousel } from "../ui/carrousel/Carrousel";
+import type { Genre, Series } from "../types";
+import { TvCarrousel } from "../ui/carrousel/TvCarrousel";
 import type { Language } from "../types";
 import Navbar from "../ui/navbar/navbar";
 
@@ -20,7 +20,7 @@ async function fetcher<T>(
   language: Language,
   genre?: number
 ): Promise<T[]> {
-  const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language}`;
+  const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
   const genderParam = `&with_genres=${genre}`;
   const url = `${baseUrl}${genderParam}`;
   try {
@@ -42,47 +42,74 @@ async function fetcher<T>(
 
 export function Serieslistpage() {
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [series1, setMovies1] = useState<Movie[]>([]);
-  const [series2, setMovies2] = useState<Movie[]>([]);
-  const [series3, setMovies3] = useState<Movie[]>([]);
-  const [series4, setMovies4] = useState<Movie[]>([]);
-  const [series5, setMovies5] = useState<Movie[]>([]);
+  const [series1, setSeries1] = useState<Series[]>([]);
+  const [series2, setSeries2] = useState<Series[]>([]);
+  const [series3, setSeries3] = useState<Series[]>([]);
+  const [series4, setSeries4] = useState<Series[]>([]);
+  const [series5, setSeries5] = useState<Series[]>([]);
+  const [id1, setId1] = useState<number>();
+  const [id2, setId2] = useState<number>();
+  const [id3, setId3] = useState<number>();
+  const [id4, setId4] = useState<number>();
+  const [id5, setId5] = useState<number>();
 
   useEffect(() => {
-    fetcher<Genre>(movieGenreURL, { name: "fr-FR" }).then(setGenres);
+    fetcher<Genre>(seriesGenreURL, { name: "fr-FR" }).then(setGenres);
   }, []);
 
   useEffect(() => {
-    if (genres.length >= 5) {
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[0].id).then(
-        setMovies1
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[1].id).then(
-        setMovies2
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[2].id).then(
-        setMovies3
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[3].id).then(
-        setMovies4
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[4].id).then(
-        setMovies5
-      );
+    if (genres.length > 0) {
+      setId1(Math.floor(Math.random() * genres.length));
+      setId2(Math.floor(Math.random() * genres.length));
+      setId3(Math.floor(Math.random() * genres.length));
+      setId4(Math.floor(Math.random() * genres.length));
+      setId5(Math.floor(Math.random() * genres.length));
     }
   }, [genres]);
+
+  useEffect(() => {
+    if (
+      genres.length >= 5 &&
+      id1 != undefined &&
+      id2 != undefined &&
+      id3 != undefined &&
+      id4 != undefined &&
+      id5 != undefined
+    ) {
+      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[0].id).then(
+        setSeries1
+      );
+      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[1].id).then(
+        setSeries2
+      );
+      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[2].id).then(
+        setSeries3
+      );
+      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[3].id).then(
+        setSeries4
+      );
+      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[4].id).then(
+        setSeries5
+      );
+    }
+  }, [genres, id1, id2, id3, id4, id5]);
   return (
     <>
       <Navbar />
-      {genres.length >= 5 && (
-        <div>
-          <Carrousel title={genres[0].name} array={movies1} />
-          <Carrousel title={genres[1].name} array={movies2} />
-          <Carrousel title={genres[2].name} array={movies3} />
-          <Carrousel title={genres[3].name} array={movies4} />
-          <Carrousel title={genres[4].name} array={movies5} />
-        </div>
-      )}
+      {genres.length >= 5 &&
+        id1 != undefined &&
+        id2 != undefined &&
+        id3 != undefined &&
+        id4 != undefined &&
+        id5 != undefined && (
+          <div>
+            <TvCarrousel title={genres[id1].name} array={series1} />
+            <TvCarrousel title={genres[id2].name} array={series2} />
+            <TvCarrousel title={genres[id3].name} array={series3} />
+            <TvCarrousel title={genres[id4].name} array={series4} />
+            <TvCarrousel title={genres[id5].name} array={series5} />
+          </div>
+        )}
     </>
   );
 }
