@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
 import { Button } from "../button/Button";
-import { useEffect, useState } from "react";
-import type { Language } from "../../types";
+import { useEffect } from "react";
+import { useLanguageContext } from "../../LanguageContext";
 
 export function Navbar() {
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>({
-    name: "en-US",
-  });
+  const { selectedLanguage, setSelectedLanguage } = useLanguageContext();
 
   useEffect(() => {
     console.log(selectedLanguage);

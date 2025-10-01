@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "../ui/button/Button";
 import "./moviepage.css";
 import Navbar from "../ui/navbar/navbar";
+import { useLanguageContext } from "../LanguageContext";
 
 const options = {
   method: "GET",
@@ -34,17 +35,21 @@ async function itemFetcher<T>(
 }
 
 function Moviepage() {
+  const { selectedLanguage } = useLanguageContext();
   const { id } = useParams();
   const [detailedMovie, setDetailedMovie] = useState<DetailedMovie | null>(
     null
   );
-  useEffect(() => {
-    if (id) {
-      itemFetcher<DetailedMovie>(`movie/${id}`, { name: "fr-FR" }).then(
-        setDetailedMovie
-      );
-    }
-  }, [setDetailedMovie]);
+
+  if (selectedLanguage) {
+    useEffect(() => {
+      if (id) {
+        itemFetcher<DetailedMovie>(`movie/${id}`, selectedLanguage).then(
+          setDetailedMovie
+        );
+      }
+    }, [setDetailedMovie]);
+  }
 
   return (
     <>

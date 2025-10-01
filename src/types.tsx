@@ -1,5 +1,5 @@
 export interface Language {
-  name: "en-US" | "fr-FR" | "pt-PT" | "pt-BR" | "ru-RU" | "hi-IN";
+  name: "en-US" | "fr-FR";
 }
 
 export type Genre = {

@@ -3,6 +3,7 @@ import type { Genre, Movie } from "../types";
 import { Carrousel } from "../ui/carrousel/Carrousel";
 import type { Language } from "../types";
 import Navbar from "../ui/navbar/navbar";
+import { useLanguageContext } from "../LanguageContext";
 
 const movieListURL = "discover/movie";
 const movieGenreURL = "genre/movie/list";
@@ -43,6 +44,7 @@ async function fetcher<T>(
 }
 
 export function Movielistpage() {
+  const { selectedLanguage } = useLanguageContext();
   const [genres, setGenres] = useState<Genre[]>([]);
   const [movies1, setMovies1] = useState<Movie[]>([]);
   const [movies2, setMovies2] = useState<Movie[]>([]);
@@ -55,9 +57,11 @@ export function Movielistpage() {
   const [id4, setId4] = useState<number>();
   const [id5, setId5] = useState<number>();
 
-  useEffect(() => {
-    fetcher<Genre>(movieGenreURL, { name: "fr-FR" }).then(setGenres);
-  }, []);
+  if (selectedLanguage) {
+    useEffect(() => {
+      fetcher<Genre>(movieGenreURL, selectedLanguage).then(setGenres);
+    }, []);
+  }
 
   useEffect(() => {
     if (genres.length > 0) {
@@ -78,21 +82,31 @@ export function Movielistpage() {
       id4 != undefined &&
       id5 != undefined
     ) {
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[id1].id).then(
-        setMovies1
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[id2].id).then(
-        setMovies2
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[id3].id).then(
-        setMovies3
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[id4].id).then(
-        setMovies4
-      );
-      fetcher<Movie>(movieListURL, { name: "fr-FR" }, genres[id5].id).then(
-        setMovies5
-      );
+      if (selectedLanguage) {
+        fetcher<Movie>(
+          movieListURL,
+          { name: selectedLanguage.name },
+          genres[id1].id
+        ).then(setMovies1);
+        fetcher<Movie>(
+          movieListURL,
+          { name: selectedLanguage.name },
+          genres[id2].id
+        ).then(setMovies2);
+        fetcher<Movie>(
+          movieListURL,
+          { name: selectedLanguage.name },
+          genres[id3].id
+        ).then(setMovies3);
+        fetcher<Movie>(
+          movieListURL,
+          { name: selectedLanguage.name },
+          genres[id4].id
+        ).then(setMovies4);
+        fetcher<Movie>(movieListURL, selectedLanguage, genres[id5].id).then(
+          setMovies5
+        );
+      }
     }
   }, [genres, id1, id2, id3, id4, id5]);
   return (

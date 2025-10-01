@@ -3,6 +3,7 @@ import type { Genre, Series } from "../types";
 import { TvCarrousel } from "../ui/carrousel/TvCarrousel";
 import type { Language } from "../types";
 import Navbar from "../ui/navbar/navbar";
+import { useLanguageContext } from "../LanguageContext";
 
 const seriesListURL = "discover/tv";
 const seriesGenreURL = "genre/tv/list";
@@ -41,6 +42,7 @@ async function fetcher<T>(
 }
 
 export function Serieslistpage() {
+  const { selectedLanguage } = useLanguageContext();
   const [genres, setGenres] = useState<Genre[]>([]);
   const [series1, setSeries1] = useState<Series[]>([]);
   const [series2, setSeries2] = useState<Series[]>([]);
@@ -53,9 +55,11 @@ export function Serieslistpage() {
   const [id4, setId4] = useState<number>();
   const [id5, setId5] = useState<number>();
 
-  useEffect(() => {
-    fetcher<Genre>(seriesGenreURL, { name: "fr-FR" }).then(setGenres);
-  }, []);
+  if (selectedLanguage) {
+    useEffect(() => {
+      fetcher<Genre>(seriesGenreURL, selectedLanguage).then(setGenres);
+    }, []);
+  }
 
   useEffect(() => {
     if (genres.length > 0) {
@@ -69,6 +73,7 @@ export function Serieslistpage() {
 
   useEffect(() => {
     if (
+      selectedLanguage &&
       genres.length >= 5 &&
       id1 != undefined &&
       id2 != undefined &&
@@ -76,19 +81,19 @@ export function Serieslistpage() {
       id4 != undefined &&
       id5 != undefined
     ) {
-      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[0].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[0].id).then(
         setSeries1
       );
-      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[1].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[1].id).then(
         setSeries2
       );
-      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[2].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[2].id).then(
         setSeries3
       );
-      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[3].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[3].id).then(
         setSeries4
       );
-      fetcher<Series>(seriesListURL, { name: "fr-FR" }, genres[4].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[4].id).then(
         setSeries5
       );
     }

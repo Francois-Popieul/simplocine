@@ -11,6 +11,7 @@ import { Carrousel } from "../ui/carrousel/Carrousel";
 import { Banner } from "../ui/banner/Banner";
 import type { Language } from "../types";
 import Navbar from "../ui/navbar/navbar";
+import { useLanguageContext } from "../LanguageContext";
 
 const personURL = "discover/person";
 const movieListURL = "discover/movie";
@@ -45,41 +46,45 @@ async function fetcher<T>(urlpart: string, language: Language): Promise<T[]> {
 }
 
 function Homepage() {
+  const { selectedLanguage } = useLanguageContext();
   const [genres, setGenres] = useState<Genre[]>([]);
   const [persons, setPersons] = useState<Person[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
   const [trendingMovies, setTrendingdMovies] = useState<Movie[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<UpcomingMovie[]>([]);
-  const [detailedMovie, setDetailedMovie] = useState<DetailedMovie | null>();
 
-  useEffect(() => {
-    fetcher<Movie>(topRatedMovieURL, { name: "fr-FR" }).then(setTopRatedMovies);
-  }, []);
+  if (selectedLanguage) {
+    useEffect(() => {
+      fetcher<Movie>(topRatedMovieURL, selectedLanguage).then(
+        setTopRatedMovies
+      );
+    }, []);
 
-  useEffect(() => {
-    fetcher<Genre>(movieGenreURL, { name: "fr-FR" }).then(setGenres);
-  }, []);
+    useEffect(() => {
+      fetcher<Genre>(movieGenreURL, selectedLanguage).then(setGenres);
+    }, []);
 
-  useEffect(() => {
-    fetcher<Movie>(movieListURL, { name: "fr-FR" }).then(setMovies);
-  }, []);
+    useEffect(() => {
+      fetcher<Movie>(movieListURL, selectedLanguage).then(setMovies);
+    }, []);
 
-  useEffect(() => {
-    fetcher<Movie>(trendingMovieURL, { name: "fr-FR" }).then(
-      setTrendingdMovies
-    );
-  }, []);
+    useEffect(() => {
+      fetcher<Movie>(trendingMovieURL, { name: selectedLanguage.name }).then(
+        setTrendingdMovies
+      );
+    }, []);
 
-  useEffect(() => {
-    fetcher<UpcomingMovie>(upcomingMoviesURL, { name: "fr-FR" }).then(
-      setUpcomingMovies
-    );
-  }, []);
+    useEffect(() => {
+      fetcher<UpcomingMovie>(upcomingMoviesURL, selectedLanguage).then(
+        setUpcomingMovies
+      );
+    }, []);
 
-  useEffect(() => {
-    fetcher<Person>(personURL, { name: "fr-FR" }).then(setPersons);
-  }, []);
+    useEffect(() => {
+      fetcher<Person>(personURL, selectedLanguage).then(setPersons);
+    }, []);
+  }
 
   return (
     <>
