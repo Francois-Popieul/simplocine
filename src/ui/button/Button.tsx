@@ -4,7 +4,7 @@ import clsx from "clsx";
 interface ButtonProps {
   name: string;
   variant: "primary" | "secondary";
-  width: "default" | "small" | "medium" | "large";
+  width: "default" | "very_small" | "small" | "medium" | "large";
   onClick?: () => void;
 }
 
@@ -16,6 +16,7 @@ export const Button = (props: ButtonProps) => {
         `button_${props.variant}`,
         `button_${props.width}`
       )}
+      onClick={props.onClick}
     >
       {props.name}
     </button>

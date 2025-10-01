@@ -9,6 +9,7 @@ export function Navbar() {
 
   useEffect(() => {
     console.log(selectedLanguage);
+    // window.location.reload();
   }, [selectedLanguage]);
 
   return (

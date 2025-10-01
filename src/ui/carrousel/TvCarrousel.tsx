@@ -16,12 +16,18 @@ export const TvCarrousel = (props: CarrouselProps) => {
     if (startNumber > 0) {
       setStartNumber(startNumber - 1);
       setEndNumber(endNumber - 1);
+    } else {
+      setStartNumber(15);
+      setEndNumber(20);
     }
   }
   function ScrollRight() {
     if (endNumber < 20) {
       setStartNumber(startNumber + 1);
       setEndNumber(endNumber + 1);
+    } else {
+      setStartNumber(0);
+      setEndNumber(6);
     }
   }
 
