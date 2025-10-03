@@ -1,15 +1,21 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
 import { Button } from "../button/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLanguageContext } from "../../LanguageContext";
+import { languageData } from "../../translations";
 
 export function Navbar() {
   const { selectedLanguage, setSelectedLanguage } = useLanguageContext();
 
+  const [staticTexts, setStaticTexts] = useState(languageData.en);
+
   useEffect(() => {
-    console.log(selectedLanguage);
-    // window.location.reload();
+    if (selectedLanguage && selectedLanguage.name == "fr-FR") {
+      setStaticTexts(languageData.fr);
+    } else if (selectedLanguage && selectedLanguage.name == "en-US") {
+      setStaticTexts(languageData.en);
+    }
   }, [selectedLanguage]);
 
   return (
@@ -18,11 +24,14 @@ export function Navbar() {
         <div className="link_container">
           <div className="logo">
             <Link to={"/"}>
-              <img src="/images/simplocine_logo.png" alt="Simplociné Logo" />
+              <img
+                srcSet="/images/simplocine_basic_logo.png 720w, /images/simplocine_logo.png"
+                alt="Simplociné Logo"
+              />
             </Link>
           </div>
-          <Link to={"/movie-list"}>Movies</Link>
-          <Link to={"/series-list"}>Series</Link>
+          <Link to={"/movie-list"}>{staticTexts.movies}</Link>
+          <Link to={"/series-list"}>{staticTexts.series}</Link>
         </div>
         <div className="language_container">
           <Button

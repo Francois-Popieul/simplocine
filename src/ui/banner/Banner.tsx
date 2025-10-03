@@ -4,6 +4,7 @@ import { Button } from "../button/Button";
 import "./Banner.css";
 import { Link } from "react-router";
 import { useLanguageContext } from "../../LanguageContext";
+import { languageData } from "../../translations";
 
 interface BannerProps {
   array: Movie[] | UpcomingMovie[];
@@ -13,6 +14,16 @@ export const Banner = (props: BannerProps) => {
   const [randomMovie, setRandomMovie] = useState<Movie | UpcomingMovie>();
 
   const { selectedLanguage } = useLanguageContext();
+
+  const [staticTexts, setStaticTexts] = useState(languageData.en);
+
+  useEffect(() => {
+    if (selectedLanguage && selectedLanguage.name == "fr-FR") {
+      setStaticTexts(languageData.fr);
+    } else if (selectedLanguage && selectedLanguage.name == "en-US") {
+      setStaticTexts(languageData.en);
+    }
+  }, [selectedLanguage]);
 
   useEffect(() => {
     if (props.array.length > 0) {
@@ -32,7 +43,7 @@ export const Banner = (props: BannerProps) => {
 
   return (
     <>
-      <h2 className="banner_title">Selection</h2>
+      <h2 className="banner_title">{staticTexts.selection}</h2>
       <div className="banner_container">
         <div className="banner">
           <img
@@ -44,7 +55,7 @@ export const Banner = (props: BannerProps) => {
             <div>
               <p className="banner_movie_title">{randomMovie.title}</p>
               <p>
-                Release date:{" "}
+                {staticTexts.releaseDate}{" "}
                 {new Date(randomMovie.release_date).toLocaleDateString(
                   selectedLanguage?.name,
                   {
@@ -54,10 +65,17 @@ export const Banner = (props: BannerProps) => {
                   }
                 )}
               </p>
-              <p>Note: {Math.floor(randomMovie.vote_average * 10) / 10}</p>
+              <p>
+                {staticTexts.note}{" "}
+                {Math.floor(randomMovie.vote_average * 10) / 10}
+              </p>
             </div>
             <Link key={randomMovie.id} to={`/movie/${randomMovie.id}`}>
-              <Button name="Details" variant="primary" width="medium" />
+              <Button
+                name={staticTexts.details}
+                variant="primary"
+                width="medium"
+              />
             </Link>
           </div>
         </div>

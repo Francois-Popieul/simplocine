@@ -1,10 +1,21 @@
-import type { Language, DetailedMovie, MovieCredits } from "../types";
+import type {
+  Language,
+  DetailedMovie,
+  MovieCredits,
+  Movie,
+  Collection,
+} from "../types";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button/Button";
 import "./moviepage.css";
 import Navbar from "../ui/navbar/navbar";
 import { useLanguageContext } from "../LanguageContext";
+import { PersonVignette } from "../ui/personVignette/personVignette";
+import { languageData } from "../translations";
+import { Carrousel } from "../ui/carrousel/Carrousel";
+
+const collectionURL = "collection";
 
 const options = {
   method: "GET",
@@ -13,6 +24,33 @@ const options = {
     Authorization: `Bearer ${import.meta.env.VITE_APIKEY}`,
   },
 };
+
+async function fetcher<T>(
+  urlpart: string,
+  language: Language,
+  genre?: number
+): Promise<T[]> {
+  console.log(language);
+
+  const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
+  const genreParam = `&with_genres=${genre}`;
+  const url = `${baseUrl}${genreParam}`;
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error(`Statut de la réponse : ${response.status}`);
+    }
+
+    const data = await response.json();
+    if (urlpart === "genre/movie/list") {
+      return data.genres;
+    }
+    return data.results;
+  } catch (error) {
+    return [];
+  }
+}
 
 async function itemFetcher<T>(
   urlpart: string,
@@ -42,6 +80,19 @@ function Moviepage() {
   );
   const [detailedMovieCredits, setDetailedMovieCredits] =
     useState<MovieCredits | null>(null);
+  const [collectionMovies, setCollectionMovies] = useState<Movie[] | null>(
+    null
+  );
+
+  const [staticTexts, setStaticTexts] = useState(languageData.en);
+
+  useEffect(() => {
+    if (selectedLanguage && selectedLanguage.name == "fr-FR") {
+      setStaticTexts(languageData.fr);
+    } else if (selectedLanguage && selectedLanguage.name == "en-US") {
+      setStaticTexts(languageData.en);
+    }
+  }, [selectedLanguage]);
 
   if (selectedLanguage) {
     useEffect(() => {
@@ -52,6 +103,10 @@ function Moviepage() {
         itemFetcher<MovieCredits>(`movie/${id}/credits`, selectedLanguage).then(
           setDetailedMovieCredits
         );
+        fetcher<Movie>(
+          `${collectionURL}/${detailedMovie?.belongs_to_collection?.id}`,
+          selectedLanguage
+        ).then(setCollectionMovies);
       }
     }, [setDetailedMovie, selectedLanguage]);
   }
@@ -72,7 +127,7 @@ function Moviepage() {
             <div className="movie_page_right_column">
               <h1 className="movie_page_title">{detailedMovie.title}</h1>
               <p className="movie_page_length">
-                Length: {detailedMovie.runtime} minutes
+                {staticTexts.length} {detailedMovie.runtime} minutes
               </p>
               <div className="movie_page_genre_container">
                 {detailedMovie.genres.map((genre) => (
@@ -82,22 +137,29 @@ function Moviepage() {
               <p className="movie_page_summary">{detailedMovie.overview}</p>
             </div>
           </div>
-          <p className="casting_title">Main Cast</p>
-          <div className="casting_container">
-            {detailedMovieCredits?.cast.slice(0, 10).map((actor) => (
-              <Link key={actor.id} to={`/person/${actor.id}`}>
-                <div className="actor_container">
-                  <img
-                    className="actor_portrait"
-                    src={`https://media.themoviedb.org/t/p/w600_and_h900_bestv2${actor.profile_path}`}
-                    alt="{actor.name}"
+          {detailedMovieCredits && detailedMovieCredits.cast.length > 0 && (
+            <>
+              <p className="casting_title">{staticTexts.mainCast}</p>
+              <div className="casting_container">
+                {detailedMovieCredits?.cast.slice(0, 10).map((actor) => (
+                  <PersonVignette
+                    actorName={actor.name}
+                    actorId={actor.id}
+                    actorCharacter={actor.character}
+                    actorProfilePath={actor.profile_path}
                   />
-                  <p className="actor_name">{actor.name}</p>
-                  <p className="actor_role">{actor.character}</p>
+                ))}
+              </div>
+              {/* {collectionMovies && (
+                <div>
+                  <Carrousel
+                    title="You may also like"
+                    array={collectionMovies}
+                  />
                 </div>
-              </Link>
-            ))}
-          </div>
+              )} */}
+            </>
+          )}
         </div>
       )}
     </>

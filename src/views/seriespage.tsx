@@ -1,10 +1,12 @@
-import type { Language, DetailedSeries } from "../types";
+import type { Language, DetailedSeries, SeriesCredits } from "../types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "../ui/button/Button";
 import "./moviepage.css";
 import Navbar from "../ui/navbar/navbar";
 import { useLanguageContext } from "../LanguageContext";
+import { PersonVignette } from "../ui/personVignette/personVignette";
+import { languageData } from "../translations";
 
 const options = {
   method: "GET",
@@ -40,12 +42,26 @@ function Seriespage() {
   const [detailedSeries, setDetailedSeries] = useState<DetailedSeries | null>(
     null
   );
+  const [detailedSeriesCredits, setDetailedSeriesCredits] =
+    useState<SeriesCredits | null>(null);
+  const [staticTexts, setStaticTexts] = useState(languageData.en);
+
+  useEffect(() => {
+    if (selectedLanguage && selectedLanguage.name == "fr-FR") {
+      setStaticTexts(languageData.fr);
+    } else if (selectedLanguage && selectedLanguage.name == "en-US") {
+      setStaticTexts(languageData.en);
+    }
+  }, [selectedLanguage]);
 
   if (selectedLanguage) {
     useEffect(() => {
       if (id) {
         itemFetcher<DetailedSeries>(`tv/${id}`, selectedLanguage).then(
           setDetailedSeries
+        );
+        itemFetcher<SeriesCredits>(`tv/${id}/credits`, selectedLanguage).then(
+          setDetailedSeriesCredits
         );
       }
     }, [setDetailedSeries, selectedLanguage]);
@@ -55,38 +71,55 @@ function Seriespage() {
     <>
       <Navbar />
       {detailedSeries && (
-        <div className="movie_page_container">
-          <div className="movie_page_left_column">
-            <img
-              className="movie_page_image"
-              src={`https://media.themoviedb.org/t/p/w600_and_h900_bestv2${detailedSeries.poster_path}`}
-              alt={detailedSeries.name}
-            />
-          </div>
-          <div className="movie_page_right_column">
-            <h1 className="movie_page_title">{detailedSeries.name}</h1>
-            <p className="movie_page_length">
-              Number of seasons: {detailedSeries.number_of_seasons}
-            </p>
-            <p className="movie_page_length">
-              Number of episodes: {detailedSeries.number_of_episodes}
-            </p>
-            <div className="movie_page_genre_container">
-              {detailedSeries.genres.map((genre) => (
-                <Button name={genre.name} variant="primary" width="small" />
-              ))}
+        <div className="movie_page_global_container">
+          <div className="movie_page_container">
+            <div className="movie_page_left_column">
+              <img
+                className="movie_page_image"
+                src={`https://media.themoviedb.org/t/p/w600_and_h900_bestv2${detailedSeries.poster_path}`}
+                alt={detailedSeries.name}
+              />
             </div>
+            <div className="movie_page_right_column">
+              <h1 className="movie_page_title">{detailedSeries.name}</h1>
+              <p className="movie_page_length">
+                {detailedSeries.number_of_seasons} {staticTexts.seasons}
+              </p>
+              <p className="movie_page_length">
+                {detailedSeries.number_of_episodes} {staticTexts.episodes}
+              </p>
+              <div className="movie_page_genre_container">
+                {detailedSeries.genres.map((genre) => (
+                  <Button name={genre.name} variant="primary" width="small" />
+                ))}
+              </div>
 
-            <p className="movie_page_summary">{detailedSeries.overview}</p>
+              <p className="movie_page_summary">{detailedSeries.overview}</p>
 
-            <div className="">
-              {detailedSeries.seasons.map((season) => (
-                <ul>
-                  <li>{season.name}</li>
-                </ul>
-              ))}
+              <div className="">
+                {detailedSeries.seasons.map((season) => (
+                  <ul>
+                    <li>{season.name}</li>
+                  </ul>
+                ))}
+              </div>
             </div>
           </div>
+          {detailedSeriesCredits && detailedSeriesCredits.cast.length > 0 && (
+            <>
+              <p className="casting_title">{staticTexts.mainCast}</p>
+              <div className="casting_container">
+                {detailedSeriesCredits?.cast.slice(0, 10).map((actor) => (
+                  <PersonVignette
+                    actorName={actor.name}
+                    actorId={actor.id}
+                    actorCharacter={actor.character}
+                    actorProfilePath={actor.profile_path}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </>

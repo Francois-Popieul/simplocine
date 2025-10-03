@@ -12,6 +12,7 @@ import { Banner } from "../ui/banner/Banner";
 import type { Language } from "../types";
 import Navbar from "../ui/navbar/navbar";
 import { useLanguageContext } from "../LanguageContext";
+import { languageData } from "../translations";
 
 const personURL = "discover/person";
 const movieListURL = "discover/movie";
@@ -53,6 +54,15 @@ function Homepage() {
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
   const [trendingMovies, setTrendingdMovies] = useState<Movie[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<UpcomingMovie[]>([]);
+  const [staticTexts, setStaticTexts] = useState(languageData.en);
+
+  useEffect(() => {
+    if (selectedLanguage && selectedLanguage.name == "fr-FR") {
+      setStaticTexts(languageData.fr);
+    } else if (selectedLanguage && selectedLanguage.name == "en-US") {
+      setStaticTexts(languageData.en);
+    }
+  }, [selectedLanguage]);
 
   if (selectedLanguage) {
     useEffect(() => {
@@ -90,9 +100,9 @@ function Homepage() {
     <>
       <Navbar />
       <Banner array={trendingMovies} />
-      <Carrousel title="Trending Movies" array={trendingMovies} />
-      <Carrousel title="Top Rated Movies" array={topRatedMovies} />
-      <Carrousel title="Upcoming Movies" array={upcomingMovies} />
+      <Carrousel title={staticTexts.trending} array={trendingMovies} />
+      <Carrousel title={staticTexts.top} array={topRatedMovies} />
+      <Carrousel title={staticTexts.upcoming} array={upcomingMovies} />
     </>
   );
 }

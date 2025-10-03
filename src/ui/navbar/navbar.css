@@ -8,7 +8,8 @@
 
 .logo {
     display: block;
-    width: 20%;
+    width: 10%;
+    min-width: 10%;
 
     & img {
         width: 100%;
@@ -22,7 +23,7 @@
     align-items: center;
     justify-content: left;
     gap: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-right: 1rem;
 }
 
@@ -34,4 +35,15 @@
     gap: 1rem;
     font-size: 2rem;
     margin-right: 1rem;
+}
+
+@media screen and (min-width: 720px) {
+    .link_container {
+        font-size: 2rem;
+    }
+
+    .logo {
+        width: 20%;
+        min-width: 20%;
+    }
 }
