@@ -1,3 +1,11 @@
+.movie_page_global_container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    border: 2px solid aliceblue;
+}
+
 .movie_page_container {
     display: flex;
     flex-direction: row;
@@ -6,10 +14,59 @@
     gap: 0.5rem;
     width: 95vw;
     height: auto;
-    border: 2px solid aliceblue;
     margin: 0.2rem auto;
     padding: 0;
     box-sizing: border-box;
+}
+
+.casting_title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 1rem auto;
+}
+
+.casting_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.actor_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 150px;
+    height: 225px;
+    gap: 5px;
+    margin: 0 auto;
+    padding: 0.25rem;
+    filter: grayscale(20%);
+
+    &:hover {
+        filter: grayscale(0%);
+        scale: 1.05;
+    }
+}
+
+.actor_portrait {
+    width: 100px;
+    height: auto;
+}
+
+.actor_name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.actor_role {
+    font-size: 1rem;
+    text-align: center;
 }
 
 .movie_page_left_column {

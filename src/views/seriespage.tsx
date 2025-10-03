@@ -48,7 +48,7 @@ function Seriespage() {
           setDetailedSeries
         );
       }
-    }, [setDetailedSeries]);
+    }, [setDetailedSeries, selectedLanguage]);
   }
 
   return (

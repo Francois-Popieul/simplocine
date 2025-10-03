@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "../button/Button";
 import "./Banner.css";
 import { Link } from "react-router";
+import { useLanguageContext } from "../../LanguageContext";
 
 interface BannerProps {
   array: Movie[] | UpcomingMovie[];
@@ -10,6 +11,8 @@ interface BannerProps {
 
 export const Banner = (props: BannerProps) => {
   const [randomMovie, setRandomMovie] = useState<Movie | UpcomingMovie>();
+
+  const { selectedLanguage } = useLanguageContext();
 
   useEffect(() => {
     if (props.array.length > 0) {
@@ -43,7 +46,7 @@ export const Banner = (props: BannerProps) => {
               <p>
                 Release date:{" "}
                 {new Date(randomMovie.release_date).toLocaleDateString(
-                  "en-US",
+                  selectedLanguage?.name,
                   {
                     year: "numeric",
                     month: "long",
@@ -51,7 +54,7 @@ export const Banner = (props: BannerProps) => {
                   }
                 )}
               </p>
-              <p>Note: {randomMovie.vote_average}</p>
+              <p>Note: {Math.floor(randomMovie.vote_average * 10) / 10}</p>
             </div>
             <Link key={randomMovie.id} to={`/movie/${randomMovie.id}`}>
               <Button name="Details" variant="primary" width="medium" />

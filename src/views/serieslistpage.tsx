@@ -22,8 +22,8 @@ async function fetcher<T>(
   genre?: number
 ): Promise<T[]> {
   const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
-  const genderParam = `&with_genres=${genre}`;
-  const url = `${baseUrl}${genderParam}`;
+  const genreParam = `&with_genres=${genre}`;
+  const url = `${baseUrl}${genreParam}`;
   try {
     const response = await fetch(url, options);
 
@@ -58,7 +58,7 @@ export function Serieslistpage() {
   if (selectedLanguage) {
     useEffect(() => {
       fetcher<Genre>(seriesGenreURL, selectedLanguage).then(setGenres);
-    }, []);
+    }, [selectedLanguage]);
   }
 
   useEffect(() => {
@@ -81,19 +81,19 @@ export function Serieslistpage() {
       id4 != undefined &&
       id5 != undefined
     ) {
-      fetcher<Series>(seriesListURL, selectedLanguage, genres[0].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[id1].id).then(
         setSeries1
       );
-      fetcher<Series>(seriesListURL, selectedLanguage, genres[1].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[id2].id).then(
         setSeries2
       );
-      fetcher<Series>(seriesListURL, selectedLanguage, genres[2].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[id3].id).then(
         setSeries3
       );
-      fetcher<Series>(seriesListURL, selectedLanguage, genres[3].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[id4].id).then(
         setSeries4
       );
-      fetcher<Series>(seriesListURL, selectedLanguage, genres[4].id).then(
+      fetcher<Series>(seriesListURL, selectedLanguage, genres[id5].id).then(
         setSeries5
       );
     }

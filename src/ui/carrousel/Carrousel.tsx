@@ -17,12 +17,12 @@ export const Carrousel = (props: CarrouselProps) => {
       setStartNumber(startNumber - 1);
       setEndNumber(endNumber - 1);
     } else {
-      setStartNumber(15);
+      setStartNumber(14);
       setEndNumber(20);
     }
   }
   function ScrollRight() {
-    if (endNumber < 20) {
+    if (endNumber < 19) {
       setStartNumber(startNumber + 1);
       setEndNumber(endNumber + 1);
     } else {
@@ -49,7 +49,9 @@ export const Carrousel = (props: CarrouselProps) => {
                 alt={movie.title}
               />
               <p className="vignette_title">{movie.title}</p>
-              <p className="vignette_note">{movie.vote_average}</p>
+              <p className="vignette_note">
+                {Math.floor(movie.vote_average * 10) / 10}
+              </p>
             </div>
           </Link>
         ))}

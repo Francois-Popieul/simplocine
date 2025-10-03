@@ -17,7 +17,7 @@ export const TvCarrousel = (props: CarrouselProps) => {
       setStartNumber(startNumber - 1);
       setEndNumber(endNumber - 1);
     } else {
-      setStartNumber(15);
+      setStartNumber(14);
       setEndNumber(20);
     }
   }
@@ -49,7 +49,9 @@ export const TvCarrousel = (props: CarrouselProps) => {
                 alt={series.name}
               />
               <p className="vignette_title">{series.name}</p>
-              <p className="vignette_note">{series.vote_average}</p>
+              <p className="vignette_note">
+                {Math.floor(series.vote_average * 10) / 10}
+              </p>
             </div>
           </Link>
         ))}

@@ -20,14 +20,15 @@ carrousel_container {
     justify-content: space-between;
     gap: 1rem;
     width: 100%;
+    height: 300px;
     overflow: hidden;
-
 }
 
 .carrousel_title {
     font-size: 2rem;
     font-weight: 600;
     margin-top: 2rem;
+    height: 50px;
 }
 
 .vignette {
@@ -56,13 +57,14 @@ carrousel_container {
     height: auto;
 }
 
-.right_scroll_button {
+.right_scroll_button,
+.left_scroll_button {
     position: absolute;
     font-size: 2rem;
     font-weight: 600;
     right: 5px;
     width: 50px;
-    height: 30%;
+    height: 300px;
     opacity: 0.2;
 
     &:hover {
@@ -71,15 +73,6 @@ carrousel_container {
 }
 
 .left_scroll_button {
-    position: absolute;
-    font-size: 2rem;
-    font-weight: 600;
+    right: 0;
     left: 5px;
-    width: 50px;
-    height: 30%;
-    opacity: 0.2;
-
-    &:hover {
-        opacity: 0.8;
-    }
 }

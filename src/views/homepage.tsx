@@ -59,31 +59,31 @@ function Homepage() {
       fetcher<Movie>(topRatedMovieURL, selectedLanguage).then(
         setTopRatedMovies
       );
-    }, []);
+    }, [selectedLanguage]);
 
     useEffect(() => {
       fetcher<Genre>(movieGenreURL, selectedLanguage).then(setGenres);
-    }, []);
+    }, [selectedLanguage]);
 
     useEffect(() => {
       fetcher<Movie>(movieListURL, selectedLanguage).then(setMovies);
-    }, []);
+    }, [selectedLanguage]);
 
     useEffect(() => {
       fetcher<Movie>(trendingMovieURL, { name: selectedLanguage.name }).then(
         setTrendingdMovies
       );
-    }, []);
+    }, [selectedLanguage]);
 
     useEffect(() => {
       fetcher<UpcomingMovie>(upcomingMoviesURL, selectedLanguage).then(
         setUpcomingMovies
       );
-    }, []);
+    }, [selectedLanguage]);
 
     useEffect(() => {
       fetcher<Person>(personURL, selectedLanguage).then(setPersons);
-    }, []);
+    }, [selectedLanguage]);
   }
 
   return (

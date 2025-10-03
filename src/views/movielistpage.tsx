@@ -24,8 +24,8 @@ async function fetcher<T>(
   console.log(language);
 
   const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
-  const genderParam = `&with_genres=${genre}`;
-  const url = `${baseUrl}${genderParam}`;
+  const genreParam = `&with_genres=${genre}`;
+  const url = `${baseUrl}${genreParam}`;
   try {
     const response = await fetch(url, options);
 
@@ -60,7 +60,7 @@ export function Movielistpage() {
   if (selectedLanguage) {
     useEffect(() => {
       fetcher<Genre>(movieGenreURL, selectedLanguage).then(setGenres);
-    }, []);
+    }, [selectedLanguage]);
   }
 
   useEffect(() => {
@@ -83,26 +83,18 @@ export function Movielistpage() {
       id5 != undefined
     ) {
       if (selectedLanguage) {
-        fetcher<Movie>(
-          movieListURL,
-          { name: selectedLanguage.name },
-          genres[id1].id
-        ).then(setMovies1);
-        fetcher<Movie>(
-          movieListURL,
-          { name: selectedLanguage.name },
-          genres[id2].id
-        ).then(setMovies2);
-        fetcher<Movie>(
-          movieListURL,
-          { name: selectedLanguage.name },
-          genres[id3].id
-        ).then(setMovies3);
-        fetcher<Movie>(
-          movieListURL,
-          { name: selectedLanguage.name },
-          genres[id4].id
-        ).then(setMovies4);
+        fetcher<Movie>(movieListURL, selectedLanguage, genres[id1].id).then(
+          setMovies1
+        );
+        fetcher<Movie>(movieListURL, selectedLanguage, genres[id2].id).then(
+          setMovies2
+        );
+        fetcher<Movie>(movieListURL, selectedLanguage, genres[id3].id).then(
+          setMovies3
+        );
+        fetcher<Movie>(movieListURL, selectedLanguage, genres[id4].id).then(
+          setMovies4
+        );
         fetcher<Movie>(movieListURL, selectedLanguage, genres[id5].id).then(
           setMovies5
         );

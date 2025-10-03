@@ -28,13 +28,13 @@ export function Navbar() {
           <Button
             name="EN"
             variant="primary"
-            width="small"
+            width="very_small"
             onClick={() => setSelectedLanguage({ name: "en-US" })}
           />
           <Button
             name="FR"
             variant="primary"
-            width="small"
+            width="very_small"
             onClick={() => setSelectedLanguage({ name: "fr-FR" })}
           />
         </div>
