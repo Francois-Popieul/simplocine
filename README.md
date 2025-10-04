@@ -1,69 +1,39 @@
-# React + TypeScript + Vite
+# 🎬 Simplociné
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simplociné est un projet front-end réalisé dans le cadre de la formation CDA chez **Simplon Grenoble**. Inspiré de l'interface de Netflix, ce site vitrine permet de découvrir des films via une interface moderne et responsive, en exploitant l'API de TMDB.
 
-Currently, two official plugins are available:
+## 🚀 Objectifs pédagogiques
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ce projet a pour but de :
 
-## Expanding the ESLint configuration
+- Apprendre à utiliser **React** avec **TypeScript** et **Vite**
+- Comprendre et manipuler les **hooks React** (`useState`, `useEffect`, etc.)
+- Créer des **composants réutilisables** et bien structurés
+- Gérer l’état local et les interactions utilisateur
+- Approfondir les bonnes pratiques de développement front-end
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧰 Stack technique
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React** + **TypeScript**
+- **Vite** pour le bundling et le hot module replacement
+- **CSS** pour le style des composants
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📁 Structure du projet
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+simplocine/ ├── src/ │ ├── components/ # Composants réutilisables (Card, Navbar, etc.) │ ├── pages/ # Pages principales (Accueil, Détails, etc.) │ ├── assets/ # Images, icônes, etc. │ └── App.tsx # Point d’entrée de l’application ├── public/ # Fichiers statiques ├── tsconfig.json # Configuration TypeScript ├── vite.config.ts # Configuration Vite └── README.md # Documentation du projet
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📦 Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Cloner le dépôt :
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    ```bash
+    git clone https://github.com/Francois-Popieul/simplocine.git
+    cd simplocine
+    ```
+2. Installer les dépendances :
+    npm install
+
+3. Lancer le serveur de développement :
+    npm run dev
+
+4. Accéder au site sur http://localhost:5173
