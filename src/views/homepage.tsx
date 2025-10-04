@@ -100,9 +100,21 @@ function Homepage() {
     <>
       <Navbar />
       <Banner array={trendingMovies} />
-      <Carrousel title={staticTexts.trending} array={trendingMovies} />
-      <Carrousel title={staticTexts.top} array={topRatedMovies} />
-      <Carrousel title={staticTexts.upcoming} array={upcomingMovies} />
+      <Carrousel
+        title={staticTexts.trending}
+        array={trendingMovies}
+        arrayLength={trendingMovies.length}
+      />
+      <Carrousel
+        title={staticTexts.top}
+        array={topRatedMovies}
+        arrayLength={topRatedMovies.length}
+      />
+      <Carrousel
+        title={staticTexts.upcoming}
+        array={upcomingMovies}
+        arrayLength={upcomingMovies.length}
+      />
     </>
   );
 }

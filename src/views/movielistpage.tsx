@@ -111,11 +111,31 @@ export function Movielistpage() {
         id4 != undefined &&
         id5 != undefined && (
           <div>
-            <Carrousel title={genres[id1].name} array={movies1} />
-            <Carrousel title={genres[id2].name} array={movies2} />
-            <Carrousel title={genres[id3].name} array={movies3} />
-            <Carrousel title={genres[id4].name} array={movies4} />
-            <Carrousel title={genres[id5].name} array={movies5} />
+            <Carrousel
+              title={genres[id1].name}
+              array={movies1}
+              arrayLength={movies1.length}
+            />
+            <Carrousel
+              title={genres[id2].name}
+              array={movies2}
+              arrayLength={movies2.length}
+            />
+            <Carrousel
+              title={genres[id3].name}
+              array={movies3}
+              arrayLength={movies3.length}
+            />
+            <Carrousel
+              title={genres[id4].name}
+              array={movies4}
+              arrayLength={movies4.length}
+            />
+            <Carrousel
+              title={genres[id5].name}
+              array={movies5}
+              arrayLength={movies5.length}
+            />
           </div>
         )}
     </>

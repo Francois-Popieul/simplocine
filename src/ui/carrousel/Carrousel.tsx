@@ -6,6 +6,7 @@ import { Link } from "react-router";
 interface CarrouselProps {
   title: string;
   array: Movie[] | UpcomingMovie[];
+  arrayLength: number;
 }
 
 export const Carrousel = (props: CarrouselProps) => {
@@ -17,12 +18,12 @@ export const Carrousel = (props: CarrouselProps) => {
       setStartNumber(startNumber - 1);
       setEndNumber(endNumber - 1);
     } else {
-      setStartNumber(14);
-      setEndNumber(20);
+      setStartNumber(props.arrayLength - 6);
+      setEndNumber(props.arrayLength);
     }
   }
   function ScrollRight() {
-    if (endNumber < 20) {
+    if (endNumber < props.arrayLength) {
       setStartNumber(startNumber + 1);
       setEndNumber(endNumber + 1);
     } else {

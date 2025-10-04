@@ -158,6 +158,7 @@ function Moviepage() {
                   <Carrousel
                     title={staticTexts.sameCollection}
                     array={collectionMovies}
+                    arrayLength={collectionMovies.length}
                   />
                 </div>
               )}
