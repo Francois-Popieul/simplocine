@@ -8,28 +8,23 @@ interface CarrouselProps {
   array: Movie[] | UpcomingMovie[];
 }
 
-export const Carrousel = (props: CarrouselProps) => {
-  const [startNumber, setStartNumber] = useState<number>(0);
-  const [endNumber, setEndNumber] = useState<number>(6);
+const VISIBLE_COUNT = 6;
 
-  function ScrollLeft() {
-    if (startNumber > 0) {
-      setStartNumber(startNumber - 1);
-      setEndNumber(endNumber - 1);
-    } else {
-      setStartNumber(14);
-      setEndNumber(20);
-    }
+export const Carrousel = ({ title, array }: CarrouselProps) => {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const maxStartIndex = Math.max(array.length - VISIBLE_COUNT, 0);
+
+  function scrollLeft() {
+    setStartIndex((prev) => (prev > 0 ? prev - 1 : maxStartIndex));
   }
-  function ScrollRight() {
-    if (endNumber < 19) {
-      setStartNumber(startNumber + 1);
-      setEndNumber(endNumber + 1);
-    } else {
-      setStartNumber(0);
-      setEndNumber(6);
-    }
+
+  function scrollRight() {
+    setStartIndex((prev) => (prev < maxStartIndex ? prev + 1 : 0));
   }
+
+  const visibleItems = array.slice(startIndex, startIndex + VISIBLE_COUNT);
+
 
   return (
     <div className="carrousel_container">

@@ -17,6 +17,7 @@ export const languageData = {
     female: "Female",
     male: "Male",
     nonBinary: "Non-binary",
+    sameCollection: "In the same collection",
   },
   fr: {
     movies: "Films",
@@ -36,5 +37,6 @@ export const languageData = {
     female: "Femme",
     male: "Homme",
     nonBinary: "Non-binaire",
+    sameCollection: "Dans la même collection",
   },
 };

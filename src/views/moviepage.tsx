@@ -32,9 +32,8 @@ async function fetcher<T>(
 ): Promise<T[]> {
   console.log(language);
 
-  const baseUrl = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
-  const genreParam = `&with_genres=${genre}`;
-  const url = `${baseUrl}${genreParam}`;
+  const url = `https://api.themoviedb.org/3/${urlpart}?language=${language.name}`;
+
   try {
     const response = await fetch(url, options);
 
@@ -43,10 +42,8 @@ async function fetcher<T>(
     }
 
     const data = await response.json();
-    if (urlpart === "genre/movie/list") {
-      return data.genres;
-    }
-    return data.results;
+    console.log(data.parts);
+    return data.parts;
   } catch (error) {
     return [];
   }
@@ -80,6 +77,7 @@ function Moviepage() {
   );
   const [detailedMovieCredits, setDetailedMovieCredits] =
     useState<MovieCredits | null>(null);
+
   const [collectionMovies, setCollectionMovies] = useState<Movie[] | null>(
     null
   );
@@ -103,13 +101,18 @@ function Moviepage() {
         itemFetcher<MovieCredits>(`movie/${id}/credits`, selectedLanguage).then(
           setDetailedMovieCredits
         );
-        fetcher<Movie>(
-          `${collectionURL}/${detailedMovie?.belongs_to_collection?.id}`,
-          selectedLanguage
-        ).then(setCollectionMovies);
       }
-    }, [setDetailedMovie, selectedLanguage]);
+    }, [setDetailedMovie, selectedLanguage, collectionMovies]);
   }
+
+  useEffect(() => {
+    if (detailedMovie?.belongs_to_collection?.id && selectedLanguage) {
+      fetcher<Movie>(
+        `${collectionURL}/${detailedMovie.belongs_to_collection.id}`,
+        selectedLanguage
+      ).then(setCollectionMovies);
+    }
+  }, [detailedMovie, selectedLanguage]);
 
   return (
     <>
@@ -150,14 +153,14 @@ function Moviepage() {
                   />
                 ))}
               </div>
-              {/* {collectionMovies && (
+              {collectionMovies && (
                 <div>
                   <Carrousel
-                    title="You may also like"
+                    title={staticTexts.sameCollection}
                     array={collectionMovies}
                   />
                 </div>
-              )} */}
+              )}
             </>
           )}
         </div>
